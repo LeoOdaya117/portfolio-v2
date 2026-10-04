@@ -86,6 +86,10 @@
   color: var(--text-muted);
 }
 
+.statLabelNoWrap {
+  white-space: nowrap;
+}
+
 .visual {
   position: relative;
   height: min(40vw, 32rem);

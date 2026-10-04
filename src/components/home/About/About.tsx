@@ -40,7 +40,13 @@ export default function About() {
 
                     <div>
                       <div className={styles.statValue}>{value}</div>
-                      <div className={styles.statLabel}>{label}</div>
+                      <div
+                        className={`${styles.statLabel} ${
+                          icon === "desktop" ? styles.statLabelNoWrap : ""
+                        }`}
+                      >
+                        {label}
+                      </div>
                     </div>
                   </div>
                 );
