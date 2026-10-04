@@ -27,7 +27,7 @@ export const aboutData = {
     ],
   },
   quote: {
-    text: "I build systems that make work easier and data more useful.",
-    author: "Leo Odaya",
+    text: "The function of good software is to make the complex appear to be simple.",
+    author: "Grady Booch",
   },
 } satisfies AboutSectionData;
