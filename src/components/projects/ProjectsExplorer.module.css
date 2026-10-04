@@ -1,0 +1,246 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.filters {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.filterButton {
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.5rem 0.85rem;
+  background: var(--surface-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.filterButton:hover {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.filterButton[aria-pressed="true"] {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--white);
+  font-weight: 750;
+}
+
+.filterButton[aria-pressed="true"]:hover {
+  border-color: var(--forest-light);
+  background: var(--forest-light);
+}
+
+.filterCount {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.filterButton[aria-pressed="true"] .filterCount {
+  color: var(--surface-secondary);
+}
+
+.searchField {
+  display: flex;
+  flex: 0 0 min(100%, 19rem);
+  min-width: 12rem;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 0.9rem;
+  background: var(--surface);
+  color: var(--text-muted);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.searchField:focus-within {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--forest) 14%, transparent);
+}
+
+.searchField input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  padding: 0.55rem 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.84rem;
+}
+
+.searchField input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.searchField input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clearSearch {
+  display: grid;
+  flex: 0 0 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-secondary);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.resultCount {
+  margin: 0.9rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.resultCount strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.7vw, 1.4rem);
+}
+
+@media (min-width: 1050px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.emptyState {
+  display: grid;
+  justify-items: center;
+  border: 1px dashed var(--border);
+  border-radius: 1rem;
+  padding: clamp(2rem, 6vw, 4rem) 1.25rem;
+  text-align: center;
+}
+
+.emptyState h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.15rem;
+}
+
+.emptyState p {
+  margin: 0.55rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.emptyState button,
+.loadMore button {
+  min-height: 2.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  background: var(--surface);
+  color: var(--forest);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.emptyState button:hover,
+.loadMore button:hover {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--surface);
+}
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.75rem;
+}
+
+.sentinel {
+  height: 1px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.filterButton:focus-visible,
+.clearSearch:focus-visible,
+.emptyState button:focus-visible,
+.loadMore button:focus-visible {
+  outline: 3px solid var(--forest);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .searchField {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 580px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filterButton,
+  .searchField,
+  .emptyState button,
+  .loadMore button {
+    transition: none;
+  }
+}

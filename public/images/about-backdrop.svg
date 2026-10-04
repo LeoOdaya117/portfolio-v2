@@ -1,0 +1,22 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#F1F0EE"/>
+  <g opacity="0.8">
+    <path d="M512 0L719 0L600 188L512 0Z" fill="#E6E3DE"/>
+    <path d="M200 140L450 0L587 260L320 260L200 140Z" fill="#F3F2F0"/>
+    <path d="M782 23L1052 24L1200 210L890 194L782 23Z" fill="#EDEAE4"/>
+    <path d="M698 190L1005 245L978 640L685 610L698 190Z" fill="#E7E2DA"/>
+    <path d="M120 410L331 260L492 612L274 768L120 410Z" fill="#EEE9E3"/>
+    <path d="M968 386L1200 249L1200 610L1017 800L968 386Z" fill="#E8E3DB"/>
+    <path d="M532 164L835 168L710 520L492 530L532 164Z" fill="#D9D8D4"/>
+    <path d="M338 490L574 585L534 800L226 800L338 490Z" fill="#E7E1D9"/>
+  </g>
+  <g opacity="0.45">
+    <circle cx="1036" cy="180" r="7" fill="#D9D2C8"/>
+    <circle cx="1088" cy="208" r="9" fill="#D9D2C8"/>
+    <circle cx="1000" cy="128" r="6" fill="#D9D2C8"/>
+    <circle cx="178" cy="203" r="7" fill="#DAD5CE"/>
+    <circle cx="120" cy="252" r="9" fill="#DAD5CE"/>
+    <circle cx="196" cy="692" r="8" fill="#DAD5CE"/>
+    <circle cx="1108" cy="643" r="9" fill="#DAD5CE"/>
+  </g>
+</svg>
