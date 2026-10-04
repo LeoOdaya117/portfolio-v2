@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { heroData } from "@/data/hero";
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -9,19 +10,23 @@ import {
   Smartphone,
 } from "lucide-react";
 
-const focusAreas = [
-  { label: "Web Applications", Icon: Monitor },
-  { label: "Mobile Development", Icon: Smartphone },
-  { label: "APIs & Backend", Icon: Code2 },
-];
+const heroIcons = {
+  arrowRight: ArrowRight,
+  briefcase: BriefcaseBusiness,
+  code: Code2,
+  download: Download,
+  mapPin: MapPin,
+  monitor: Monitor,
+  smartphone: Smartphone,
+} as const;
 
 export default function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-visual" aria-label="Software engineering workspace">
+      <div className="hero-visual" aria-label={heroData.image.label}>
         <Image
-          src="/images/hero-workspace-mockup.png"
-          alt="A bright desk with code on one screen and a colorful visualization on another."
+          src={heroData.image.src}
+          alt={heroData.image.alt}
           fill
           sizes="100vw"
           fetchPriority="high"
@@ -31,74 +36,74 @@ export default function Hero() {
         <div className="hero-focus-card">
           <div className="hero-focus-heading">
             <span className="availability-dot" />
-            Open to Opportunities
+            {heroData.focusCard.heading}
           </div>
 
-          <ul className="hero-focus" aria-label="Areas of focus">
-            {focusAreas.map(({ label, Icon }) => (
-              <li key={label}>
-                <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-                <span>{label}</span>
-              </li>
-            ))}
+          <ul className="hero-focus" aria-label={heroData.focusCard.listLabel}>
+            {heroData.focusCard.items.map(({ label, icon }) => {
+              const Icon = heroIcons[icon];
+
+              return (
+                <li key={label}>
+                  <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+                  <span>{label}</span>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
-        <p className="hero-note">Turning ideas into useful software.</p>
+        <p className="hero-note">{heroData.note}</p>
       </div>
 
       <div className="container hero-content">
         <div className="hero-copy">
-          <div className="hero-eyebrow">WEB · MOBILE · API · SYSTEMS</div>
+          <div className="hero-eyebrow">{heroData.eyebrow}</div>
 
           <h1 id="hero-title">
-            Software
+            {heroData.title.firstLine}
             <br />
-            <span>Engineer</span>
+            <span>{heroData.title.secondLine}</span>
           </h1>
 
-          <h2>Building practical software for real-world problems.</h2>
+          <h2>{heroData.subtitle}</h2>
 
-          <p className="hero-description">
-            I develop web and mobile applications, APIs, and custom software
-            systems
-            with a focus on usability, performance, maintainability, and
-            real-world impact.
-          </p>
+          <p className="hero-description">{heroData.description}</p>
 
           <div className="hero-actions">
-            <a href="#projects" className="button button-primary">
-              View My Work
-              <ArrowRight size={17} aria-hidden="true" />
-            </a>
+            {heroData.actions.map((action) => {
+              const Icon = heroIcons[action.icon];
 
-            <a
-              href="/resume/leo-odaya-resume.pdf"
-              className="button button-outline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Download Resume
-              <Download size={16} aria-hidden="true" />
-            </a>
+              return (
+                <a
+                  key={action.label}
+                  href={action.href}
+                  className={`button button-${action.variant}`}
+                  target={action.target}
+                  rel={action.rel}
+                >
+                  {action.label}
+                  <Icon
+                    size={action.icon === "arrowRight" ? 17 : 16}
+                    aria-hidden="true"
+                  />
+                </a>
+              );
+            })}
           </div>
         </div>
 
-        <div className="hero-status" aria-label="Availability and location">
-          <div>
-            <BriefcaseBusiness size={15} aria-hidden="true" />
-            <span>Open to Full-Time Roles</span>
-          </div>
+        <div className="hero-status" aria-label={heroData.statusLabel}>
+          {heroData.status.map(({ label, icon }) => {
+            const Icon = heroIcons[icon];
 
-          <div>
-            <Code2 size={15} aria-hidden="true" />
-            <span>Available for Freelance Projects</span>
-          </div>
-
-          <div>
-            <MapPin size={15} aria-hidden="true" />
-            <span>Philippines</span>
-          </div>
+            return (
+              <div key={label}>
+                <Icon size={15} aria-hidden="true" />
+                <span>{label}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

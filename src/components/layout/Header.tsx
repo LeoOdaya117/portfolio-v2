@@ -1,28 +1,30 @@
 import Link from "next/link";
+import { headerData } from "@/data/header";
 
 export default function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link href="/" className="brand">
-          <strong>Leo Odaya</strong>
+        <Link href={headerData.brand.href} className="brand">
+          <strong>{headerData.brand.name}</strong>
 
-          <span>Software Engineer</span>
+          <span>{headerData.brand.role}</span>
         </Link>
 
-        <nav className="desktop-nav">
-          <a href="/" aria-current="page">
-            Home
-          </a>
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#services">Services</a>
-          <a href="#experience">Experience</a>
-          <a href="#contact">Contact</a>
+        <nav className="desktop-nav" aria-label={headerData.navigationLabel}>
+          {headerData.links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              aria-current={link.current ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
 
-        <a href="#contact" className="header-cta">
-          Let&apos;s Work Together
+        <a href={headerData.cta.href} className="header-cta">
+          {headerData.cta.label}
         </a>
       </div>
     </header>
