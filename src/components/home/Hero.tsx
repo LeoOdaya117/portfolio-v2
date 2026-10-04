@@ -4,7 +4,6 @@ import {
   BriefcaseBusiness,
   Code2,
   Download,
-  Map,
   MapPin,
   Monitor,
   Smartphone,
@@ -13,7 +12,6 @@ import {
 const focusAreas = [
   { label: "Web Applications", Icon: Monitor },
   { label: "Mobile Development", Icon: Smartphone },
-  { label: "GIS & Mapping", Icon: Map },
   { label: "APIs & Backend", Icon: Code2 },
 ];
 
@@ -23,33 +21,35 @@ export default function Hero() {
       <div className="hero-visual" aria-label="Software engineering workspace">
         <Image
           src="/images/hero-workspace-mockup.png"
-          alt="A bright desk with code and a GIS map displayed across two screens."
+          alt="A bright desk with code on one screen and a colorful visualization on another."
           fill
           sizes="100vw"
           fetchPriority="high"
           className="hero-photo"
         />
 
-        <div className="hero-opportunity">
-          <span className="availability-dot" />
-          Open to Opportunities
-        </div>
+        <div className="hero-focus-card">
+          <div className="hero-focus-heading">
+            <span className="availability-dot" />
+            Open to Opportunities
+          </div>
 
-        <ul className="hero-focus" aria-label="Areas of focus">
-          {focusAreas.map(({ label, Icon }) => (
-            <li key={label}>
-              <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-              <span>{label}</span>
-            </li>
-          ))}
-        </ul>
+          <ul className="hero-focus" aria-label="Areas of focus">
+            {focusAreas.map(({ label, Icon }) => (
+              <li key={label}>
+                <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <p className="hero-note">Turning ideas into useful software.</p>
       </div>
 
       <div className="container hero-content">
         <div className="hero-copy">
-          <div className="hero-eyebrow">WEB · MOBILE · GIS · API · SYSTEMS</div>
+          <div className="hero-eyebrow">WEB · MOBILE · API · SYSTEMS</div>
 
           <h1 id="hero-title">
             Software
@@ -60,7 +60,8 @@ export default function Hero() {
           <h2>Building practical software for real-world problems.</h2>
 
           <p className="hero-description">
-            I develop web and mobile applications, APIs, and geospatial systems
+            I develop web and mobile applications, APIs, and custom software
+            systems
             with a focus on usability, performance, maintainability, and
             real-world impact.
           </p>

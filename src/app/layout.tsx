@@ -4,7 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Leo Odaya | Software Engineer",
   description:
-    "Software Engineer and Full-Stack Developer building web, mobile, API, and geospatial applications.",
+    "Software Engineer and Full-Stack Developer building web, mobile, API, and custom software systems.",
+  icons: {
+    icon: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({
