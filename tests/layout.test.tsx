@@ -12,12 +12,14 @@ vi.mock("next/link", () => ({
     href,
     children,
     className,
+    "aria-current": ariaCurrent,
   }: {
     href: string;
     children: ReactNode;
     className?: string;
+    "aria-current"?: "page";
   }) => (
-    <a href={href} className={className}>
+    <a href={href} className={className} aria-current={ariaCurrent}>
       {children}
     </a>
   ),

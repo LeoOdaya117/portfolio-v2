@@ -9,7 +9,7 @@ export const footerData = {
   links: [
     { label: "About", href: "#about" },
     { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#projects" },
+    { label: "Projects", href: "/projects" },
     { label: "Services", href: "#services" },
     { label: "Contact", href: "#contact" },
   ],

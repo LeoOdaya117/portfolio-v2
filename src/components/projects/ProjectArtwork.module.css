@@ -1,0 +1,135 @@
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.65 / 1;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: var(--surface-secondary);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.placeholder {
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  color: var(--text);
+}
+
+.placeholder::before,
+.placeholder::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+}
+
+.placeholder::before {
+  width: 17rem;
+  height: 17rem;
+  right: -5rem;
+  bottom: -9rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+
+.placeholder::after {
+  width: 12rem;
+  height: 12rem;
+  right: -2.5rem;
+  bottom: -6.5rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.categoryLine {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.monogram {
+  position: absolute;
+  right: 1.4rem;
+  bottom: -2rem;
+  font-size: clamp(8rem, 12vw, 12rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.1em;
+  opacity: 0.12;
+}
+
+.projectName {
+  max-width: 70%;
+  font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  place-items: center;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: rgba(255, 253, 248, 0.58);
+  color: var(--forest);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.field {
+  background-color: #e0e9e1;
+  background-image:
+    linear-gradient(rgba(25, 56, 47, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 56, 47, 0.055) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--forest);
+}
+
+.watershed {
+  background:
+    radial-gradient(ellipse at 70% 55%, rgba(49, 91, 77, 0.2), transparent 44%),
+    var(--sand);
+  color: var(--forest);
+}
+
+.fitness {
+  background:
+    linear-gradient(135deg, rgba(185, 87, 63, 0.18), transparent 58%),
+    #eee5d9;
+  color: #623c30;
+}
+
+.travel {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 42%),
+    var(--forest);
+  color: var(--white);
+}
+
+.travel .mark {
+  background: rgba(255, 253, 248, 0.88);
+}
+
+.commerce {
+  background:
+    linear-gradient(135deg, rgba(219, 133, 109, 0.2), transparent 50%),
+    var(--surface-secondary);
+  color: var(--text);
+}

@@ -10,7 +10,7 @@ export const headerData = {
   links: [
     { label: "Home", href: "/", current: true },
     { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
+    { label: "Projects", href: "/projects" },
     { label: "Services", href: "#services" },
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },

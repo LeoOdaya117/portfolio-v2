@@ -23,20 +23,33 @@ export default function Header() {
           className="hidden items-center gap-8 text-[13px] text-text-muted min-[851px]:flex"
           aria-label={headerData.navigationLabel}
         >
-          {headerData.links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              aria-current={link.current ? "page" : undefined}
-              className={`relative transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none ${
-                link.current
-                  ? "font-bold text-text after:absolute after:inset-x-0 after:-bottom-3 after:h-0.5 after:rounded-full after:bg-text after:content-['']"
-                  : ""
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {headerData.links.map((link) => {
+            const className =
+              "relative transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none " +
+              (link.current
+                ? "font-bold text-text after:absolute after:inset-x-0 after:-bottom-3 after:h-0.5 after:rounded-full after:bg-text after:content-['']"
+                : "");
+
+            return link.href.startsWith("/") ? (
+              <Link
+                key={link.label}
+                href={link.href}
+                aria-current={link.current ? "page" : undefined}
+                className={className}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                aria-current={link.current ? "page" : undefined}
+                className={className}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
         <a

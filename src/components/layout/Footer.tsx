@@ -1,5 +1,6 @@
 import { footerData } from "@/data/footer";
 import Container from "@/components/layout/Container";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -17,15 +18,25 @@ export default function Footer() {
           className="flex flex-wrap gap-6 text-xs text-text-muted min-[801px]:flex-nowrap"
           aria-label={footerData.navigationLabel}
         >
-          {footerData.links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none"
-            >
-              {link.label}
-            </a>
-          ))}
+          {footerData.links.map((link) =>
+            link.href.startsWith("/") ? (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                className="transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none"
+              >
+                {link.label}
+              </a>
+            ),
+          )}
         </nav>
 
         <span className="whitespace-nowrap text-xs text-text-muted">
