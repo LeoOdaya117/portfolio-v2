@@ -6,6 +6,7 @@ export const projects = [
     title: "FieldOps",
     summary:
       "Offline-first workforce platform with mobile app, web admin, mapping, synchronization, and reporting.",
+    platforms: ["Web", "Mobile", "Desktop"],
     categories: ["Web", "Mobile", "GIS"],
     featured: true,
     visualTheme: "field",
@@ -49,6 +50,7 @@ export const projects = [
     title: "Watershed Management & Field Monitoring Platform",
     summary:
       "Production web and mobile modules for watershed and field monitoring, including GIS maps, patrol-route visualization, dashboards, reporting, and field-data workflows.",
+    platforms: ["Web", "Mobile", "Desktop"],
     categories: ["Web", "Mobile", "GIS"],
     featured: true,
     visualTheme: "watershed",
@@ -83,6 +85,7 @@ export const projects = [
     title: "T-Shop",
     summary:
       "Full-stack e-commerce platform for product, checkout, order, inventory, and administrative workflows.",
+    platforms: ["Web", "Desktop"],
     categories: ["Web", "E-commerce", "API"],
     featured: false,
     visualTheme: "commerce",
@@ -118,6 +121,7 @@ export const projects = [
     title: "Gym Management & Mobile Fitness Recommendation System",
     summary:
       "Integrated web and native Android system for gym bookings, member management, administration, and fitness workflows.",
+    platforms: ["Web", "Mobile", "Desktop"],
     categories: ["Web", "Mobile", "Android"],
     featured: true,
     visualTheme: "fitness",
@@ -159,6 +163,7 @@ export const projects = [
     title: "Road Trip",
     summary:
       "Mobile road-trip tracker that records GPS routes, calculates ride statistics, and displays trip history on interactive maps.",
+    platforms: ["Mobile"],
     categories: ["Mobile", "GPS", "Maps"],
     featured: true,
     visualTheme: "travel",

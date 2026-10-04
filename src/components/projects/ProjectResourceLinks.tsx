@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe } from "lucide-react";
+import { siGithub } from "simple-icons";
 
 import type { ProjectLink } from "@/types/project";
 import styles from "./ProjectResourceLinks.module.css";
@@ -27,7 +28,26 @@ export default function ProjectResourceLinks({
           target="_blank"
           rel="noreferrer"
         >
-          {projectLink.label}
+          <span
+            className={styles.brandIcon}
+            data-resource-icon={projectLink.label === "Live" ? "live" : "github"}
+            aria-hidden="true"
+          >
+            {projectLink.label === "Live" ? (
+              <Globe size={16} strokeWidth={1.9} />
+            ) : (
+              <svg
+                className={styles.githubMark}
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d={siGithub.path} />
+              </svg>
+            )}
+          </span>
+          <span>{projectLink.label}</span>
           <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
         </a>
       ))}

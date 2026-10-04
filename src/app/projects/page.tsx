@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import ProjectCard from "@/components/projects/ProjectCard";
+import ProjectsExplorer from "@/components/projects/ProjectsExplorer";
 import { projects } from "@/data/projects";
 import styles from "./page.module.css";
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
-      <Header />
+      <Header activeItem="Projects" />
 
       <main className={styles.main}>
         <Container>
@@ -28,13 +28,7 @@ export default function ProjectsPage() {
             </p>
           </header>
 
-          <section aria-label="All projects">
-            <div className={styles.grid}>
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          </section>
+          <ProjectsExplorer projects={projects} />
         </Container>
       </main>
 

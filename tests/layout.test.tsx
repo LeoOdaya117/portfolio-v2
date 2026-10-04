@@ -58,6 +58,22 @@ describe("Header", () => {
     });
     expect(callToAction.getAttribute("href")).toBe(headerData.cta.href);
   });
+
+  it("marks the requested primary navigation item as current", () => {
+    render(<Header activeItem="Projects" />);
+
+    const navigation = screen.getByRole("navigation", {
+      name: headerData.navigationLabel,
+    });
+    const projectsLink = within(navigation).getByRole("link", {
+      name: "Projects",
+    });
+    const homeLink = within(navigation).getByRole("link", { name: "Home" });
+
+    expect(projectsLink.getAttribute("aria-current")).toBe("page");
+    expect(projectsLink.className).toContain("after:bg-text");
+    expect(homeLink.getAttribute("aria-current")).toBeNull();
+  });
 });
 
 describe("Footer", () => {

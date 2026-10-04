@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 
 import ProjectPage, {
   generateMetadata,
@@ -9,6 +16,7 @@ import ProjectPage, {
 import ProjectsPage from "@/app/projects/page";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import ProjectArtwork from "@/components/projects/ProjectArtwork";
+import ProjectGallery from "@/components/projects/ProjectGallery";
 import ProjectResourceLinks from "@/components/projects/ProjectResourceLinks";
 import { featuredProjects, getProjectBySlug, projects } from "@/data/projects";
 
@@ -17,12 +25,14 @@ vi.mock("next/link", () => ({
     href,
     children,
     className,
+    "aria-current": ariaCurrent,
   }: {
     href: string;
     children: ReactNode;
     className?: string;
+    "aria-current"?: "page";
   }) => (
-    <a href={href} className={className}>
+    <a href={href} className={className} aria-current={ariaCurrent}>
       {children}
     </a>
   ),
@@ -46,7 +56,48 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-afterEach(cleanup);
+class TestIntersectionObserver implements IntersectionObserver {
+  static current: TestIntersectionObserver | undefined;
+
+  readonly root = null;
+  readonly rootMargin = "0px";
+  readonly thresholds = [0];
+
+  constructor(private readonly callback: IntersectionObserverCallback) {
+    TestIntersectionObserver.current = this;
+  }
+
+  observe() {}
+
+  unobserve() {}
+
+  disconnect() {}
+
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+
+  intersect() {
+    const rect = new DOMRect();
+    const entry: IntersectionObserverEntry = {
+      boundingClientRect: rect,
+      intersectionRect: rect,
+      rootBounds: null,
+      target: document.createElement("div"),
+      time: 0,
+      isIntersecting: true,
+      intersectionRatio: 1,
+    };
+
+    this.callback([entry], this);
+  }
+}
+
+afterEach(() => {
+  cleanup();
+  vi.unstubAllGlobals();
+  TestIntersectionObserver.current = undefined;
+});
 
 describe("ProjectsSection", () => {
   it("shows the four featured projects and links to the complete project list", () => {
@@ -85,10 +136,44 @@ describe("ProjectsSection", () => {
 });
 
 describe("ProjectsPage", () => {
-  it("lists all five projects, including T-Shop", () => {
+  it("renders the separated platform filters and loads every project", () => {
     render(<ProjectsPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: "Projects" })).toBeTruthy();
+    const headerNavigation = screen.getByRole("navigation", {
+      name: "Main navigation",
+    });
+    expect(
+      within(headerNavigation)
+        .getByRole("link", { name: "Projects" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
+    expect(
+      screen.getByRole("group", { name: "Filter projects by platform" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Web projects (4)" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Mobile projects (4)" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Desktop projects (4)" }),
+    ).toBeTruthy();
+
+    for (const project of projects.slice(0, 3)) {
+      expect(
+        screen.getByRole("heading", { level: 3, name: project.title }),
+      ).toBeTruthy();
+    }
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "Road Trip" }),
+    ).toBeNull();
+    expect(screen.getByRole("status").textContent).toContain("3 of 5");
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Load more projects" }),
+    );
 
     for (const project of projects) {
       expect(
@@ -100,9 +185,62 @@ describe("ProjectsPage", () => {
           .getAttribute("href"),
       ).toBe("/projects/" + project.slug);
     }
-
-    expect(projects).toHaveLength(5);
+    expect(screen.getByRole("status").textContent).toContain("5 of 5");
     expect(screen.getByText("In progress")).toBeTruthy();
+  });
+
+  it("filters by platform and searches project descriptions and technology", () => {
+    render(<ProjectsPage />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Desktop projects (4)" }),
+    );
+    expect(screen.getByRole("status").textContent).toContain("3 of 4");
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "Road Trip" }),
+    ).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "Mobile projects (4)" }));
+    expect(screen.getByRole("status").textContent).toContain("3 of 4");
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "T-Shop" }),
+    ).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Load more projects" }));
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Road Trip" }),
+    ).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "All projects (5)" }));
+    const search = screen.getByRole("searchbox", { name: "Search projects" });
+    fireEvent.change(search, { target: { value: "Laravel 10" } });
+    expect(screen.getByRole("status").textContent).toContain("1 of 1");
+    expect(
+      screen.getByRole("heading", { level: 3, name: "T-Shop" }),
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "Road Trip" }),
+    ).toBeNull();
+
+    fireEvent.change(search, { target: { value: "no matching project" } });
+    expect(screen.getByText("No matching projects")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(screen.getByRole("status").textContent).toContain("3 of 5");
+  });
+
+  it("loads the next batch when the scroll sentinel enters the viewport", () => {
+    vi.stubGlobal("IntersectionObserver", TestIntersectionObserver);
+    render(<ProjectsPage />);
+
+    expect(screen.getByRole("status").textContent).toContain("3 of 5");
+    const observer = TestIntersectionObserver.current;
+    expect(observer).toBeDefined();
+
+    act(() => observer?.intersect());
+
+    expect(screen.getByRole("status").textContent).toContain("5 of 5");
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Road Trip" }),
+    ).toBeTruthy();
   });
 });
 
@@ -122,6 +260,14 @@ describe("Project detail page", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "FieldOps" }),
     ).toBeTruthy();
+    const headerNavigation = screen.getByRole("navigation", {
+      name: "Main navigation",
+    });
+    expect(
+      within(headerNavigation)
+        .getByRole("link", { name: "Projects" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
     expect(
       screen.getByText(
         "Offline-first workforce platform with mobile app, web admin, mapping, synchronization, and reporting.",
@@ -129,6 +275,12 @@ describe("Project detail page", () => {
     ).toBeTruthy();
     expect(screen.getByText("In progress")).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Tech Stack" })).toBeTruthy();
+    const techStack = screen.getByRole("region", { name: "Tech Stack" });
+    expect(within(techStack).getAllByRole("listitem")).toHaveLength(
+      projects[0].techStack?.length ?? 0,
+    );
+    expect(within(techStack).getByText("Laravel 13")).toBeTruthy();
+    expect(techStack.querySelector('svg[viewBox="0 0 24 24"]')).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Problem" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Solution" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "My Contribution" })).toBeTruthy();
@@ -235,6 +387,71 @@ describe("ProjectArtwork", () => {
   });
 });
 
+describe("ProjectGallery", () => {
+  it("opens a full-size preview and navigates gallery images with controls and keys", () => {
+    const project = {
+      ...projects[0],
+      galleryImages: [
+        {
+          src: "/images/projects/fieldops-desktop.png",
+          alt: "FieldOps desktop dashboard screenshot",
+          caption: "Desktop dashboard",
+        },
+        {
+          src: "/images/projects/fieldops-mobile.png",
+          alt: "FieldOps mobile patrol app screenshot",
+          caption: "Mobile patrol app",
+        },
+      ],
+    };
+
+    render(<ProjectGallery project={project} />);
+
+    expect(
+      screen.getByRole("group", { name: "FieldOps image gallery" }),
+    ).toBeTruthy();
+    expect(screen.getByText("1 / 2")).toBeTruthy();
+
+    const secondThumbnail = screen.getByRole("button", {
+      name: "Show image 2: Mobile patrol app",
+    });
+    fireEvent.click(secondThumbnail);
+    expect(secondThumbnail.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Show image 1: Desktop dashboard",
+      }),
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Open image 1 of 2: FieldOps desktop dashboard screenshot",
+      }),
+    );
+
+    const dialog = screen.getByRole("dialog", {
+      name: "FieldOps image preview",
+    });
+    expect(
+      within(dialog).getByRole("img", {
+        name: "FieldOps desktop dashboard screenshot",
+      }),
+    ).toBeTruthy();
+
+    fireEvent.keyDown(dialog, { key: "ArrowRight" });
+    expect(
+      within(dialog).getByRole("img", {
+        name: "FieldOps mobile patrol app screenshot",
+      }),
+    ).toBeTruthy();
+
+    fireEvent.keyDown(dialog, { key: "Escape" });
+    expect(
+      screen.queryByRole("dialog", { name: "FieldOps image preview" }),
+    ).toBeNull();
+  });
+});
+
 describe("ProjectResourceLinks", () => {
   it("renders supplied demo and GitHub links as external links", () => {
     render(
@@ -259,6 +476,12 @@ describe("ProjectResourceLinks", () => {
     );
     expect(demoLink.getAttribute("target")).toBe("_blank");
     expect(githubLink.getAttribute("rel")).toBe("noreferrer");
+    expect(
+      demoLink.querySelector('[data-resource-icon="live"] svg'),
+    ).toBeTruthy();
+    expect(
+      githubLink.querySelector('[data-resource-icon="github"] svg'),
+    ).toBeTruthy();
   });
 
   it("does not render an empty links region", () => {

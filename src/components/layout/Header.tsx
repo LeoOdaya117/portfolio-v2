@@ -2,7 +2,11 @@ import Link from "next/link";
 import { headerData } from "@/data/header";
 import Container from "@/components/layout/Container";
 
-export default function Header() {
+type HeaderProps = Readonly<{
+  activeItem?: "Home" | "Projects";
+}>;
+
+export default function Header({ activeItem }: HeaderProps = {}) {
   return (
     <header className="sticky top-0 z-[100] border-b border-border/80 bg-background/90 backdrop-blur-[18px]">
       <Container className="flex min-h-[78px] items-center justify-between gap-[30px]">
@@ -24,9 +28,12 @@ export default function Header() {
           aria-label={headerData.navigationLabel}
         >
           {headerData.links.map((link) => {
+            const isCurrent = activeItem
+              ? link.label === activeItem
+              : link.current;
             const className =
               "relative transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none " +
-              (link.current
+              (isCurrent
                 ? "font-bold text-text after:absolute after:inset-x-0 after:-bottom-3 after:h-0.5 after:rounded-full after:bg-text after:content-['']"
                 : "");
 
@@ -34,7 +41,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                aria-current={link.current ? "page" : undefined}
+                aria-current={isCurrent ? "page" : undefined}
                 className={className}
               >
                 {link.label}
@@ -43,7 +50,7 @@ export default function Header() {
               <a
                 key={link.label}
                 href={link.href}
-                aria-current={link.current ? "page" : undefined}
+                aria-current={isCurrent ? "page" : undefined}
                 className={className}
               >
                 {link.label}

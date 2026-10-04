@@ -24,6 +24,18 @@
     color 160ms ease;
 }
 
+.brandIcon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.githubMark {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+}
+
 .link:hover {
   border-color: var(--forest);
   background: var(--forest);

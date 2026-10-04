@@ -6,8 +6,9 @@ import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import ProjectArtwork from "@/components/projects/ProjectArtwork";
+import ProjectGallery from "@/components/projects/ProjectGallery";
 import ProjectResourceLinks from "@/components/projects/ProjectResourceLinks";
+import ProjectTechStack from "@/components/projects/ProjectTechStack";
 import { getProjectBySlug, projects } from "@/data/projects";
 import styles from "./page.module.css";
 
@@ -62,7 +63,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <>
-      <Header />
+      <Header activeItem="Projects" />
 
       <main className={styles.main}>
         <Container>
@@ -99,16 +100,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
 
               <figure className={styles.heroFigure}>
-                <ProjectArtwork
+                <ProjectGallery
                   project={project}
-                  className={styles.heroArtwork}
                   sizes="(max-width: 850px) 100vw, 50vw"
                 />
-                {project.coverImage?.caption ? (
-                  <figcaption className={styles.artworkCaption}>
-                    {project.coverImage.caption}
-                  </figcaption>
-                ) : null}
               </figure>
             </header>
 
@@ -117,39 +112,36 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               project.contribution?.length ||
               project.techStack?.length) && (
               <div className={styles.details}>
-                <div className={styles.story}>
-                  {project.problem ? (
-                    <DetailSection title="Problem">
-                      <p>{project.problem}</p>
-                    </DetailSection>
-                  ) : null}
+                {project.problem ||
+                project.solution ||
+                project.contribution?.length ? (
+                  <div className={styles.story}>
+                    {project.problem ? (
+                      <DetailSection title="Problem">
+                        <p>{project.problem}</p>
+                      </DetailSection>
+                    ) : null}
 
-                  {project.solution ? (
-                    <DetailSection title="Solution">
-                      <p>{project.solution}</p>
-                    </DetailSection>
-                  ) : null}
+                    {project.solution ? (
+                      <DetailSection title="Solution">
+                        <p>{project.solution}</p>
+                      </DetailSection>
+                    ) : null}
 
-                  {project.contribution?.length ? (
-                    <DetailSection title="My Contribution">
-                      <ul className={styles.contributionList}>
-                        {project.contribution.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </DetailSection>
-                  ) : null}
-                </div>
+                    {project.contribution?.length ? (
+                      <DetailSection title="My Contribution">
+                        <ul className={styles.contributionList}>
+                          {project.contribution.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </DetailSection>
+                    ) : null}
+                  </div>
+                ) : null}
 
                 {project.techStack?.length ? (
-                  <aside className={styles.stack}>
-                    <h2>Tech Stack</h2>
-                    <ul>
-                      {project.techStack.map((technology) => (
-                        <li key={technology}>{technology}</li>
-                      ))}
-                    </ul>
-                  </aside>
+                  <ProjectTechStack technologies={project.techStack} />
                 ) : null}
               </div>
             )}
