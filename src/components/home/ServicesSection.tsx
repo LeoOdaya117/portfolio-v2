@@ -25,9 +25,19 @@ const toneClasses = {
   blue: styles.iconBlue,
 } as const;
 
+const toneFrameClasses = {
+  forest: styles.frameForest,
+  terracotta: styles.frameTerracotta,
+  blue: styles.frameBlue,
+} as const;
+
 export default function ServicesSection() {
   return (
-    <section id="services" className={styles.section} aria-labelledby="services-title">
+    <section
+      id="services"
+      className={styles.section}
+      aria-labelledby="services-title"
+    >
       <Container>
         <div className={styles.header}>
           <div>
@@ -45,12 +55,16 @@ export default function ServicesSection() {
 
             return (
               <li key={service.title} className={styles.card}>
-                <Icon
-                  className={`${styles.icon} ${toneClasses[service.tone]}`}
-                  size={27}
-                  strokeWidth={1.8}
+                <span
+                  className={`${styles.iconFrame} ${toneFrameClasses[service.tone]}`}
                   aria-hidden="true"
-                />
+                >
+                  <Icon
+                    className={`${styles.icon} ${toneClasses[service.tone]}`}
+                    size={25}
+                    strokeWidth={1.8}
+                  />
+                </span>
                 <h3 className={styles.cardTitle}>{service.title}</h3>
                 <p className={styles.cardDescription}>{service.description}</p>
               </li>

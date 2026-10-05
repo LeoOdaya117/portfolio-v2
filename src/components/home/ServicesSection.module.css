@@ -49,16 +49,47 @@
 }
 
 .card {
+  display: flex;
   min-height: 11.5rem;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 1.2rem 1.1rem 1.15rem;
+  border-radius: 0.9rem;
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgba(20, 32, 28, 0.055);
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 180ms ease,
+    box-shadow 220ms ease;
+}
+
+.iconFrame {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 auto;
+  place-items: center;
+  margin-bottom: 0.85rem;
   border-radius: 0.8rem;
-  background: rgba(255, 253, 248, 0.9);
-  box-shadow: 0 10px 24px rgba(20, 32, 28, 0.07);
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 180ms ease;
+}
+
+.frameForest {
+  background: rgba(49, 91, 77, 0.1);
+}
+
+.frameTerracotta {
+  background: rgba(185, 87, 63, 0.1);
+}
+
+.frameBlue {
+  background: rgba(66, 89, 201, 0.1);
 }
 
 .icon {
   display: block;
-  margin-bottom: 0.85rem;
 }
 
 .iconForest {
@@ -89,6 +120,30 @@
   line-height: 1.5;
 }
 
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    background: var(--surface);
+    box-shadow: 0 18px 32px rgba(20, 32, 28, 0.12);
+  }
+
+  .card:hover .iconFrame {
+    transform: translateY(-2px) rotate(-4deg);
+  }
+
+  .card:hover .frameForest {
+    background: rgba(49, 91, 77, 0.16);
+  }
+
+  .card:hover .frameTerracotta {
+    background: rgba(185, 87, 63, 0.16);
+  }
+
+  .card:hover .frameBlue {
+    background: rgba(66, 89, 201, 0.16);
+  }
+}
+
 @media (max-width: 1050px) {
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -117,5 +172,17 @@
 @media (max-width: 420px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .iconFrame {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .iconFrame {
+    transform: none;
   }
 }
