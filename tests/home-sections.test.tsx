@@ -194,7 +194,7 @@ describe("home page added sections", () => {
       );
       if (method.primary) {
         expect(link.className).toContain("primaryMethod");
-        expect(within(link).getByText("Main contact")).toBeTruthy();
+        expect(within(link).getByText(method.value)).toBeTruthy();
       }
     }
 

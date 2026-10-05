@@ -10,7 +10,6 @@ export type ContactMethod = {
 };
 
 export type ContactSectionData = {
-  eyebrow: string;
   title: string;
   description: string;
   availabilityLabel: string;

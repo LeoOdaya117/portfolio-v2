@@ -1,10 +1,9 @@
 import type { ContactSectionData } from "@/types/contact";
 
 export const contactData = {
-  eyebrow: "Let's work together",
-  title: "Open to Opportunities and New Projects",
+  title: "Open to New Opportunities",
   description:
-    "Email is the best way to reach me about full-time opportunities, freelance work, or a project idea.",
+    "Email is the best way to reach me about a full-time role, freelance work, or your project.",
   availabilityLabel: "Available for full-time and freelance work",
   methodsLabel: "Contact Leo",
   methods: [
