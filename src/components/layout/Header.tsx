@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { headerData } from "@/data/header";
 import Container from "@/components/layout/Container";
+import HeaderNavigation from "@/components/layout/HeaderNavigation";
 
 type HeaderProps = Readonly<{
   activeItem?: "Home" | "Projects";
@@ -23,44 +24,10 @@ export default function Header({ activeItem }: HeaderProps = {}) {
           </span>
         </Link>
 
-        <nav
-          className="hidden items-center gap-8 text-[13px] text-text-muted min-[851px]:flex"
-          aria-label={headerData.navigationLabel}
-        >
-          {headerData.links.map((link) => {
-            const isCurrent = activeItem
-              ? link.label === activeItem
-              : link.current;
-            const className =
-              "relative transition-colors duration-150 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none " +
-              (isCurrent
-                ? "font-bold text-text after:absolute after:inset-x-0 after:-bottom-3 after:h-0.5 after:rounded-full after:bg-text after:content-['']"
-                : "");
-
-            return link.href.startsWith("/") ? (
-              <Link
-                key={link.label}
-                href={link.href}
-                aria-current={isCurrent ? "page" : undefined}
-                className={className}
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.label}
-                href={link.href}
-                aria-current={isCurrent ? "page" : undefined}
-                className={className}
-              >
-                {link.label}
-              </a>
-            );
-          })}
-        </nav>
+        <HeaderNavigation activeItem={activeItem} />
 
         <a
-          href={headerData.cta.href}
+          href={activeItem ? `/${headerData.cta.href}` : headerData.cta.href}
           className="rounded-full bg-forest px-[18px] py-[11px] text-xs font-bold text-white transition-colors duration-150 hover:bg-forest-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transition-none max-[561px]:hidden"
         >
           {headerData.cta.label}
