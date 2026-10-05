@@ -123,6 +123,11 @@ describe("ProjectsSection", () => {
       ).toBe("/projects/" + project.slug);
     }
 
+    const gymCategories = within(section).getByRole("list", {
+      name: "Gym Management & Mobile Fitness Recommendation System categories",
+    });
+    expect(within(gymCategories).getByText("Thesis")).toBeTruthy();
+
     expect(
       within(section)
         .getByRole("link", { name: "View All Projects" })
@@ -345,6 +350,17 @@ describe("Project detail page", () => {
       }),
     });
     render(gymPage);
+
+    expect(
+      screen.getByText(
+        "Thesis project integrating a gym management web platform and native Android fitness app for bookings, member management, administration, and fitness recommendations.",
+      ),
+    ).toBeTruthy();
+    expect(
+      within(screen.getByRole("list", { name: "Project categories" })).getByText(
+        "Thesis",
+      ),
+    ).toBeTruthy();
 
     expect(screen.getByRole("link", { name: "Live" }).getAttribute("href")).toBe(
       "https://leoodaya.online/Gym_Management/landing-page.php",

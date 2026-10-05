@@ -120,9 +120,9 @@ export const projects = [
     slug: "gym-management-mobile-fitness-recommendation-system",
     title: "Gym Management & Mobile Fitness Recommendation System",
     summary:
-      "Integrated web and native Android system for gym bookings, member management, administration, and fitness workflows.",
+      "Thesis project integrating a gym management web platform and native Android fitness app for bookings, member management, administration, and fitness recommendations.",
     platforms: ["Web", "Mobile", "Desktop"],
-    categories: ["Web", "Mobile", "Android"],
+    categories: ["Web", "Mobile", "Android", "Thesis"],
     featured: true,
     visualTheme: "fitness",
     links: [
