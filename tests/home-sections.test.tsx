@@ -4,10 +4,12 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 
 import Home from "@/app/page";
 import AIWorkflowSection from "@/components/home/AIWorkflowSection";
+import ContactSection from "@/components/home/ContactSection";
 import ExperienceSection from "@/components/home/ExperienceSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import TechStackSection from "@/components/home/TechStackSection";
 import { aiWorkflowData } from "@/data/ai-workflow";
+import { contactData } from "@/data/contact";
 import { experienceData } from "@/data/experience";
 import { headerData } from "@/data/header";
 import { servicesData } from "@/data/services";
@@ -169,6 +171,30 @@ describe("home page added sections", () => {
     expect(resumeLink.getAttribute("href")).toBe(experienceData.resumeHref);
   });
 
+  it("renders the contact section with verified contact methods", () => {
+    render(<ContactSection />);
+
+    const section = screen.getByRole("region", { name: contactData.title });
+    expect(section.getAttribute("id")).toBe("contact");
+    expect(
+      within(section).getByText(contactData.availabilityLabel),
+    ).toBeTruthy();
+
+    const methods = within(section).getByRole("list", {
+      name: contactData.methodsLabel,
+    });
+
+    for (const method of contactData.methods) {
+      const link = within(methods).getByRole("link", {
+        name: new RegExp(`^${method.label}`),
+      });
+      expect(link.getAttribute("href")).toBe(method.href);
+      expect(link.getAttribute("target")).toBe(
+        method.external ? "_blank" : null,
+      );
+    }
+  });
+
   it("places the new sections after projects and keeps the Experience anchor", () => {
     render(<Home />);
 
@@ -176,12 +202,13 @@ describe("home page added sections", () => {
     const sectionTargets = Array.from(main.querySelectorAll("section"), (section) =>
       section.id || section.getAttribute("aria-labelledby"),
     );
-    expect(sectionTargets.slice(-5)).toEqual([
+    expect(sectionTargets.slice(-6)).toEqual([
       "projects",
       "services",
       "tech-stack",
       "ai-workflow",
       "experience",
+      "contact",
     ]);
 
     const navigation = screen.getByRole("navigation", {
@@ -192,5 +219,11 @@ describe("home page added sections", () => {
     });
     expect(experienceLink.getAttribute("href")).toBe("#experience");
     expect(document.getElementById("experience")).toBeTruthy();
+
+    const contactLink = within(navigation).getByRole("link", {
+      name: "Contact",
+    });
+    expect(contactLink.getAttribute("href")).toBe("#contact");
+    expect(document.getElementById("contact")).toBeTruthy();
   });
 });
