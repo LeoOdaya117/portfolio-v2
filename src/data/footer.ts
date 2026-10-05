@@ -7,11 +7,11 @@ export const footerData = {
   },
   navigationLabel: "Footer navigation",
   links: [
-    { label: "About", href: "#about" },
-    { label: "Experience", href: "#experience" },
+    { label: "About", href: "/#about" },
+    { label: "Experience", href: "/#experience" },
     { label: "Projects", href: "/projects" },
-    { label: "Services", href: "#services" },
-    { label: "Contact", href: "#contact" },
+    { label: "Services", href: "/#services" },
+    { label: "Contact", href: "/#contact" },
   ],
   copyright: {
     symbol: "©",

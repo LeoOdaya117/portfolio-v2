@@ -1,0 +1,267 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3.7rem, 6.2vw, 6.4rem) 0;
+  background:
+    radial-gradient(ellipse at 91% 48%, rgba(231, 220, 203, 0.48), transparent 38%),
+    var(--background);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+.intro {
+  max-width: 36rem;
+}
+
+.title {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(2.3rem, 3.8vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.description {
+  max-width: 31rem;
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.availability {
+  display: flex;
+  align-items: center;
+  gap: 0.62rem;
+  margin: 1.35rem 0 0;
+  color: var(--text);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.statusDot {
+  width: 0.58rem;
+  height: 0.58rem;
+  flex: 0 0 auto;
+  border: 2px solid rgba(25, 56, 47, 0.2);
+  border-radius: 50%;
+  background: var(--forest-light);
+  box-shadow: 0 0 0 3px rgba(49, 91, 77, 0.12);
+}
+
+.methods {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.methodItem {
+  min-width: 0;
+}
+
+.primaryItem {
+  flex: 1 0 100%;
+}
+
+.socialItem {
+  flex: 0 0 3rem;
+}
+
+.method {
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.method:focus-visible {
+  outline: 2px solid var(--forest-light);
+  outline-offset: 4px;
+}
+
+.primaryMethod {
+  display: flex;
+  width: 100%;
+  min-height: 8rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--forest);
+  border-radius: 1rem;
+  color: var(--surface);
+  background: var(--forest);
+  box-shadow: 0 16px 34px rgba(20, 32, 28, 0.13);
+}
+
+.primaryMethod:hover {
+  transform: translateY(-2px);
+  border-color: var(--forest-light);
+  background: var(--forest-light);
+  box-shadow: 0 20px 38px rgba(20, 32, 28, 0.17);
+}
+
+.iconFrame {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.78rem;
+  color: var(--forest);
+  background: var(--surface);
+}
+
+.methodCopy {
+  display: grid;
+  min-width: 0;
+  gap: 0.34rem;
+}
+
+.methodLabel {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+.methodValue {
+  overflow-wrap: anywhere;
+  color: var(--surface);
+  font-size: clamp(0.9rem, 1.4vw, 1.08rem);
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.actionIcon {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: 0 0 auto;
+  place-items: center;
+  margin-left: auto;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  color: var(--surface);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.primaryMethod:hover .actionIcon {
+  transform: translate(2px, -2px);
+  color: var(--forest);
+  background: var(--surface);
+}
+
+.socialMethod {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 0.78rem;
+  color: var(--forest);
+  background: var(--surface);
+}
+
+.socialMethod:hover {
+  transform: translateY(-2px);
+  border-color: rgba(49, 91, 77, 0.4);
+  background: var(--surface-secondary);
+}
+
+.socialIcon {
+  display: grid;
+  place-items: center;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  .intro {
+    max-width: 42rem;
+  }
+
+  .methods {
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .layout {
+    gap: 1.8rem;
+  }
+
+  .title {
+    font-size: clamp(2.15rem, 9vw, 2.8rem);
+  }
+
+  .primaryMethod {
+    min-height: 7rem;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .iconFrame {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .actionIcon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .methodValue {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .primaryMethod {
+    gap: 0.65rem;
+    padding: 0.9rem;
+  }
+
+  .actionIcon {
+    display: none;
+  }
+
+  .methodValue {
+    font-size: 0.84rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .method,
+  .actionIcon {
+    transition: none;
+  }
+}
