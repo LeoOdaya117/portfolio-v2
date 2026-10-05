@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Leo Odaya | Software Engineer",
+  title: "Leo Odaya | Full Stack Developer",
   description:
-    "Software Engineer and Full-Stack Developer building web, mobile, API, and custom software systems.",
+    "Software Developer and Full-Stack Developer building web, mobile, API, and custom software systems.",
   icons: {
     icon: "/images/logo.png",
   },
