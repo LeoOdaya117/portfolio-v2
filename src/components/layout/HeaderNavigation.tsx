@@ -29,7 +29,11 @@ function getSectionId(label: NavigationLabel) {
 function getActiveMarker() {
   const headerBottom =
     document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
-  return Math.min(headerBottom + 24, window.innerHeight * 0.45);
+  const viewportMarker = window.innerHeight * 0.4;
+  return Math.min(
+    Math.max(headerBottom + 24, viewportMarker),
+    window.innerHeight * 0.45,
+  );
 }
 
 function getVisibleSection() {

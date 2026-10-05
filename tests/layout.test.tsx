@@ -188,6 +188,47 @@ describe("Header", () => {
     ).toBe("location");
   });
 
+  it("activates Contact when it occupies the current scroll area", () => {
+    render(
+      <>
+        <Header />
+        <section id="about" />
+        <section id="projects" />
+        <section id="services" />
+        <section id="experience" />
+        <section id="contact" />
+      </>,
+    );
+
+    const contactTop = Math.floor(window.innerHeight * 0.38);
+    const sectionTops = {
+      about: 1000,
+      projects: 900,
+      services: 800,
+      experience: -300,
+      contact: contactTop,
+    };
+
+    for (const [id, top] of Object.entries(sectionTops)) {
+      const section = document.getElementById(id);
+      if (!section) throw new Error(`Missing test section: ${id}`);
+      Object.defineProperty(section, "getBoundingClientRect", {
+        value: () => ({ top, bottom: top + 300 }),
+      });
+    }
+
+    fireEvent.scroll(window);
+
+    const navigation = screen.getByRole("navigation", {
+      name: headerData.navigationLabel,
+    });
+    expect(
+      within(navigation).getByRole("link", { name: "Contact" }).getAttribute(
+        "aria-current",
+      ),
+    ).toBe("location");
+  });
+
   it("keeps section links usable from the Projects route", () => {
     render(<Header activeItem="Projects" />);
 
