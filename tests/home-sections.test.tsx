@@ -192,7 +192,17 @@ describe("home page added sections", () => {
       expect(link.getAttribute("target")).toBe(
         method.external ? "_blank" : null,
       );
+      if (method.primary) {
+        expect(link.className).toContain("primaryMethod");
+        expect(within(link).getByText("Main contact")).toBeTruthy();
+      }
     }
+
+    expect(
+      within(methods).getByRole("link", { name: /^Facebook/ }).getAttribute(
+        "href",
+      ),
+    ).toBe("https://www.facebook.com/leo.odaya.1");
   });
 
   it("places the new sections after projects and keeps the Experience anchor", () => {

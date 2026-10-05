@@ -67,7 +67,7 @@
 
 .methods {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   margin: 0;
   padding: 0;
@@ -75,6 +75,7 @@
 }
 
 .method {
+  position: relative;
   display: flex;
   min-width: 0;
   min-height: 9.25rem;
@@ -104,6 +105,17 @@
 .method:focus-visible {
   outline: 2px solid var(--forest-light);
   outline-offset: 4px;
+}
+
+.primaryMethod {
+  border-color: var(--forest);
+  color: var(--surface);
+  background: var(--forest);
+}
+
+.primaryMethod:hover {
+  border-color: var(--forest-light);
+  background: var(--forest-light);
 }
 
 .iconFrame {
@@ -137,6 +149,31 @@
   line-height: 1.4;
 }
 
+.primaryMethod .methodLabel {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.primaryMethod .methodValue {
+  color: var(--surface);
+  font-size: 0.88rem;
+}
+
+.primaryMethod .iconFrame {
+  color: var(--forest);
+  background: var(--surface);
+}
+
+.primaryBadge {
+  padding: 0.3rem 0.55rem;
+  border-radius: 9999px;
+  color: var(--forest);
+  background: var(--surface);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
@@ -159,6 +196,10 @@
     align-items: center;
     justify-content: flex-start;
     padding: 0.95rem 1rem;
+  }
+
+  .primaryBadge {
+    margin-left: auto;
   }
 }
 

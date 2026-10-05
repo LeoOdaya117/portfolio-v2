@@ -1,4 +1,4 @@
-export type ContactIconName = "mail" | "linkedin" | "github";
+export type ContactIconName = "mail" | "linkedin" | "github" | "facebook";
 
 export type ContactMethod = {
   label: string;
@@ -6,6 +6,7 @@ export type ContactMethod = {
   href: string;
   icon: ContactIconName;
   external: boolean;
+  primary?: boolean;
 };
 
 export type ContactSectionData = {

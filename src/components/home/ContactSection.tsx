@@ -1,5 +1,5 @@
 import { Link2, Mail } from "lucide-react";
-import { siGithub } from "simple-icons";
+import { siFacebook, siGithub } from "simple-icons";
 
 import Container from "@/components/layout/Container";
 import { contactData } from "@/data/contact";
@@ -31,13 +31,13 @@ export default function ContactSection() {
             return (
               <li key={method.label}>
                 <a
-                  className={styles.method}
+                  className={`${styles.method} ${method.primary ? styles.primaryMethod : ""}`}
                   href={method.href}
                   target={method.external ? "_blank" : undefined}
                   rel={method.external ? "noreferrer" : undefined}
                 >
                   <span className={styles.iconFrame}>
-                    {method.icon === "github" ? (
+                    {method.icon === "github" || method.icon === "facebook" ? (
                       <svg
                         aria-hidden="true"
                         focusable="false"
@@ -46,7 +46,13 @@ export default function ContactSection() {
                         width="21"
                         height="21"
                       >
-                        <path d={siGithub.path} />
+                        <path
+                          d={
+                            method.icon === "github"
+                              ? siGithub.path
+                              : siFacebook.path
+                          }
+                        />
                       </svg>
                     ) : method.icon === "linkedin" ? (
                       <Link2 aria-hidden="true" size={21} strokeWidth={1.8} />
@@ -58,6 +64,9 @@ export default function ContactSection() {
                     <span className={styles.methodLabel}>{method.label}</span>
                     <span className={styles.methodValue}>{method.value}</span>
                   </span>
+                  {method.primary && (
+                    <span className={styles.primaryBadge}>Main contact</span>
+                  )}
                 </a>
               </li>
             );

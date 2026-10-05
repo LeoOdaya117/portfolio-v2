@@ -4,7 +4,7 @@ export const contactData = {
   eyebrow: "Let's work together",
   title: "Open to Opportunities and New Projects",
   description:
-    "Whether you're looking for a developer to join your team or need help with a project, feel free to reach out.",
+    "Email is the best way to reach me about full-time opportunities, freelance work, or a project idea.",
   availabilityLabel: "Available for full-time and freelance work",
   methodsLabel: "Contact Leo",
   methods: [
@@ -14,6 +14,7 @@ export const contactData = {
       href: "mailto:odayaleo117@gmail.com",
       icon: "mail",
       external: false,
+      primary: true,
     },
     {
       label: "LinkedIn",
@@ -27,6 +28,13 @@ export const contactData = {
       value: "github.com/LeoOdaya117",
       href: "https://github.com/LeoOdaya117",
       icon: "github",
+      external: true,
+    },
+    {
+      label: "Facebook",
+      value: "facebook.com/leo.odaya.1",
+      href: "https://www.facebook.com/leo.odaya.1",
+      icon: "facebook",
       external: true,
     },
   ],
